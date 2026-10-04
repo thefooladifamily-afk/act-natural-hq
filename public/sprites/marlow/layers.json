@@ -1,0 +1,18 @@
+{
+  "layers": [
+    {
+      "file": "layer-body.png",
+      "z": 0.0
+    },
+    {
+      "file": "layer-arms.png",
+      "z": 0.025
+    },
+    {
+      "file": "layer-head.png",
+      "z": 0.05
+    }
+  ],
+  "mouthZ": 0.054,
+  "note": "mouth plane must sit just in front of the head layer (head z + 0.004)"
+}
