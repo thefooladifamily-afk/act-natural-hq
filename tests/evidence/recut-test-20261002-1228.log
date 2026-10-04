@@ -1,0 +1,11 @@
+PASS  director mode: directLine speaks as gary
+PASS  director mode: blank line ignored
+PASS  recut: state -> recut
+PASS  recut: screen rolled down with RE-CUT card
+PASS  recut: Marlow bridge line names the conversation topic
+PASS  recut: slides reordered (rotated by questions asked)
+PASS  recut: after slides, hook state reached
+PASS  recut: all reordered slides were carded
+PASS  voice: performFamous + playTrack exist
+
+9 passed, 0 failed
