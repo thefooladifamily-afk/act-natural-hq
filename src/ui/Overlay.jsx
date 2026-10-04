@@ -25,16 +25,15 @@ export function Intro({ onEnter, err }) {
   return (
     <div className="hq-overlay">
       <h1>THE SCREENING ROOM</h1>
-      <div className="sub">ACT NATURAL — a reality documentary. Greybox v5.</div>
+      <div className="sub">ACT NATURAL — a reality documentary.</div>
       {returning && (
         <div className="hint">Welcome back, <b>{d.visitorName}</b> — visit #{d.visits + 1}. They remember you.</div>
       )}
       <div className="hint">
         You're in Marlow's screening room — where she cuts her documentary about Gary,
-        and Gary dreads going. Watch the rough cut, pick tonight's stunt, then talk
-        to Gary and Marlow — they answer out loud. Desktop: click things (the full
-        loop runs without a headset). Headset: look to aim, hold your gaze or
-        pinch / tap to choose.
+        and Gary dreads going. <b>Look to aim, pinch to choose.</b> Pick tonight's
+        stunt, then talk to Gary and Marlow — they answer out loud, and the room
+        remembers what you picked.
       </div>
       <div className="hq-btnrow">
         <button className="hq-btn" onClick={() => onEnter('vr')} disabled={vrSupported === false} title={vrSupported === false ? 'VR not supported on this device/browser' : ''}>ENTER IN VR{vrSupported === false ? ' (NOT SUPPORTED)' : ''}</button>
