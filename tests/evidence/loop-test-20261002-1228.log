@@ -1,0 +1,31 @@
+PASS  seam: PERSONAS loaded for both characters
+PASS  seam: 4 suggested lines, targets valid
+PASS  seam: respondToLine(ask-fame) -> gary, source=scripted-fallback
+PASS  seam: respondToLine(ask-doc) -> marlow, source=scripted-fallback
+PASS  seam: respondToLine(ask-next) -> gary, source=scripted-fallback
+PASS  seam: respondToLine(ask-gary) -> marlow, source=scripted-fallback
+PASS  seam: ?netfail ladder -> in-character cover line
+PASS  seam: round-robin avoids echo
+PASS  visemes: contract has 16 names incl jawOpen
+PASS  visemes: digraph th -> TH, all names valid
+PASS  visemes: charIndex alignment holds for digraphs
+PASS  visemes: punctuation -> sil, jaw openness in range
+PASS  lipsync: placeholder head carries exact Oculus morph names
+PASS  lipsync: speakText drives morph influences over time
+PASS  lipsync: mouth plane opens with jaw
+PASS  lipsync: setCharIndex (TTS boundary) accepted
+PASS  lipsync: stopText zeroes influences
+PASS  lipsync: attachGLTF upgrade path exists
+PASS  director: imports clean (no missing modules)
+PASS  director: initial state idle
+PASS  director: start() -> watch
+PASS  director: watch plays lines in order (marlow first)
+PASS  director: showVote -> voting, voteUI visible
+PASS  director: castVote(swing) -> stunt
+PASS  director: startTalk -> talk, talkUI visible
+PASS  director: askLine -> character answers in character
+PASS  director: history accumulates for the future model call
+PASS  director: endTalk -> recut (showrunner), talkUI hidden
+PASS  director: recut -> hook plays marlow then gary teaser
+
+29 passed, 0 failed
