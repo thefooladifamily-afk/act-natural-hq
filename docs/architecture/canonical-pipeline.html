@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Behavioral Cinema Engine — Canonical Pipeline</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#0e0f13;color:#e8eaed;margin:0;padding:28px;line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 4px}
+  .sub{color:#9aa0a6;margin:0 0 24px;font-size:.95rem}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:16px 0;font-size:.85rem;color:#9aa0a6}
+  .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+  table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.9rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #26282e;vertical-align:top}
+  th{color:#9aa0a6;font-weight:600;text-transform:uppercase;font-size:.75rem;letter-spacing:.05em}
+  code{font-family:ui-monospace,monospace;background:#1c1e24;padding:2px 7px;border-radius:5px;font-size:.85em}
+  .rule{color:#ffd28a}
+  .note{background:#14161b;border-left:4px solid #3ddc84;padding:14px 18px;border-radius:0 8px 8px 0;margin:24px 0;font-size:.92rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Behavioral Cinema Engine — Canonical Pipeline</h1>
+<p class="sub">One event pipeline for desktop and XR. No simulated events, no fake telemetry, no random behavior disguised as intelligence.</p>
+
+<svg viewBox="0 0 1100 560" width="100%" role="img" aria-label="Canonical pipeline diagram" style="background:#14161b;border-radius:12px">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#3ddc84"/>
+    </marker>
+    <marker id="arrB" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#8ab4ff"/>
+    </marker>
+  </defs>
+
+  <!-- input sources converging -->
+  <g font-family="system-ui,sans-serif" font-size="13">
+    <rect x="20" y="30" width="200" height="46" rx="8" fill="#23262e" stroke="#4a4e59"/>
+    <text x="120" y="50" text-anchor="middle" fill="#e8eaed">mouse / keyboard</text>
+    <text x="120" y="66" text-anchor="middle" fill="#9aa0a6" font-size="11">DesktopControls · Overlay HUD</text>
+
+    <rect x="20" y="86" width="200" height="46" rx="8" fill="#23262e" stroke="#4a4e59"/>
+    <text x="120" y="106" text-anchor="middle" fill="#e8eaed">touch</text>
+    <text x="120" y="122" text-anchor="middle" fill="#9aa0a6" font-size="11">MobileVoteUI · MobileTalkUI</text>
+
+    <rect x="20" y="142" width="200" height="46" rx="8" fill="#23262e" stroke="#4a4e59"/>
+    <text x="120" y="162" text-anchor="middle" fill="#e8eaed">gaze dwell</text>
+    <text x="120" y="178" text-anchor="middle" fill="#9aa0a6" font-size="11">GazeDwell.jsx</text>
+
+    <rect x="20" y="198" width="200" height="46" rx="8" fill="#23262e" stroke="#4a4e59"/>
+    <text x="120" y="218" text-anchor="middle" fill="#e8eaed">controllers / pinch</text>
+    <text x="120" y="234" text-anchor="middle" fill="#9aa0a6" font-size="11">XR session · HandCursors</text>
+
+    <!-- convergence arrows -->
+    <path d="M220,53 L300,200" stroke="#8ab4ff" stroke-width="2" marker-end="url(#arrB)"/>
+    <path d="M220,109 L300,205" stroke="#8ab4ff" stroke-width="2" marker-end="url(#arrB)"/>
+    <path d="M220,165 L300,210" stroke="#8ab4ff" stroke-width="2" marker-end="url(#arrB)"/>
+    <path d="M220,221 L300,215" stroke="#8ab4ff" stroke-width="2" marker-end="url(#arrB)"/>
+    <text x="252" y="150" fill="#8ab4ff" font-size="11" transform="rotate(-52 252 150)">converge</text>
+
+    <!-- funnel -->
+    <rect x="300" y="120" width="180" height="180" rx="10" fill="#1b2a1f" stroke="#3ddc84" stroke-width="2"/>
+    <text x="390" y="155" text-anchor="middle" fill="#3ddc84" font-size="15" font-weight="bold">UnifiedInput</text>
+    <text x="390" y="176" text-anchor="middle" fill="#9aa0a6" font-size="11">activate(rec, source)</text>
+    <text x="390" y="198" text-anchor="middle" fill="#c9cdd4" font-size="12">single activation funnel</text>
+    <text x="390" y="222" text-anchor="middle" fill="#c9cdd4" font-size="12">rec.onActivate()</text>
+    <text x="390" y="246" text-anchor="middle" fill="#c9cdd4" font-size="12">+ recordMemory('INTERACT')</text>
+    <text x="390" y="270" text-anchor="middle" fill="#9aa0a6" font-size="11">every device · every modality</text>
+
+    <!-- pipeline stages -->
+    <g id="stages">
+      <rect x="520" y="120" width="150" height="180" rx="10" fill="#20232b" stroke="#3ddc84" stroke-width="2"/>
+      <text x="595" y="155" text-anchor="middle" fill="#3ddc84" font-size="14" font-weight="bold">EVENT</text>
+      <text x="595" y="178" text-anchor="middle" fill="#9aa0a6" font-size="11">EventBus.js</text>
+      <text x="595" y="202" text-anchor="middle" fill="#c9cdd4" font-size="12">INTERACT / DISCOVER</text>
+      <text x="595" y="224" text-anchor="middle" fill="#c9cdd4" font-size="12">RETURN / DEVIATE</text>
+      <text x="595" y="246" text-anchor="middle" fill="#c9cdd4" font-size="12">seq · timestamp · source</text>
+      <text x="595" y="268" text-anchor="middle" fill="#9aa0a6" font-size="11">300-event ring buffer</text>
+
+      <rect x="700" y="120" width="150" height="180" rx="10" fill="#20232b" stroke="#3ddc84" stroke-width="2"/>
+      <text x="775" y="155" text-anchor="middle" fill="#3ddc84" font-size="14" font-weight="bold">MEMORY</text>
+      <text x="775" y="178" text-anchor="middle" fill="#9aa0a6" font-size="11">SessionMemory.js</text>
+      <text x="775" y="202" text-anchor="middle" fill="#c9cdd4" font-size="12">reads history FIRST</text>
+      <text x="775" y="224" text-anchor="middle" fill="#c9cdd4" font-size="12">records meaningful only</text>
+      <text x="775" y="246" text-anchor="middle" fill="#c9cdd4" font-size="12">MEMORY_READ proof event</text>
+      <text x="775" y="268" text-anchor="middle" fill="#9aa0a6" font-size="11">4s return gap</text>
+
+      <rect x="880" y="120" width="150" height="180" rx="10" fill="#20232b" stroke="#3ddc84" stroke-width="2"/>
+      <text x="955" y="155" text-anchor="middle" fill="#3ddc84" font-size="14" font-weight="bold">STATE</text>
+      <text x="955" y="178" text-anchor="middle" fill="#9aa0a6" font-size="11">BehaviorEngine.js</text>
+      <text x="955" y="202" text-anchor="middle" fill="#c9cdd4" font-size="12">CURIOUS · RETURNING</text>
+      <text x="955" y="224" text-anchor="middle" fill="#c9cdd4" font-size="12">EXPLORING · UNEXPECTED</text>
+      <text x="955" y="246" text-anchor="middle" fill="#c9cdd4" font-size="12">COMMITTED</text>
+      <text x="955" y="268" text-anchor="middle" fill="#9aa0a6" font-size="11">deterministic rules</text>
+    </g>
+    <path d="M480,210 L520,210" stroke="#3ddc84" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M670,210 L700,210" stroke="#3ddc84" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M850,210 L880,210" stroke="#3ddc84" stroke-width="2" marker-end="url(#arr)"/>
+
+    <!-- director + response row -->
+    <rect x="390" y="360" width="240" height="150" rx="10" fill="#2b2216" stroke="#ffb020" stroke-width="2"/>
+    <text x="510" y="392" text-anchor="middle" fill="#ffb020" font-size="14" font-weight="bold">DIRECTOR</text>
+    <text x="510" y="414" text-anchor="middle" fill="#9aa0a6" font-size="11">DirectorResponses.js</text>
+    <text x="510" y="438" text-anchor="middle" fill="#c9cdd4" font-size="12">named rules, explainable</text>
+    <text x="510" y="460" text-anchor="middle" fill="#c9cdd4" font-size="12">emits DIRECTOR_RULE</text>
+    <text x="510" y="482" text-anchor="middle" fill="#9aa0a6" font-size="11">defers past portal, never drops</text>
+
+    <rect x="660" y="360" width="280" height="150" rx="10" fill="#16202b" stroke="#8ab4ff" stroke-width="2"/>
+    <text x="800" y="392" text-anchor="middle" fill="#8ab4ff" font-size="14" font-weight="bold">SPATIAL / AUDIO RESPONSE</text>
+    <text x="800" y="414" text-anchor="middle" fill="#9aa0a6" font-size="11">RoomLights · ambience · voice</text>
+    <text x="800" y="438" text-anchor="middle" fill="#c9cdd4" font-size="12">warmth lift / cool shift / pulse</text>
+    <text x="800" y="460" text-anchor="middle" fill="#c9cdd4" font-size="12">double-blip on recognition</text>
+    <text x="800" y="482" text-anchor="middle" fill="#9aa0a6" font-size="11">±0.15 lighting — subtle, cinematic</text>
+
+    <path d="M955,300 L510,360" stroke="#3ddc84" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M630,435 L660,435" stroke="#ffb020" stroke-width="2" marker-end="url(#arr)"/>
+
+    <!-- bridge + judge mode -->
+    <rect x="20" y="360" width="260" height="150" rx="10" fill="#23262e" stroke="#4a4e59"/>
+    <text x="150" y="392" text-anchor="middle" fill="#e8eaed" font-size="14" font-weight="bold">EngineBridge.jsx</text>
+    <text x="150" y="414" text-anchor="middle" fill="#9aa0a6" font-size="11">mounts engine in Canvas</text>
+    <text x="150" y="438" text-anchor="middle" fill="#c9cdd4" font-size="12">hq.bus · hq.memory · hq.behavior</text>
+    <text x="150" y="460" text-anchor="middle" fill="#c9cdd4" font-size="12">pointer trail (labeled pointer)</text>
+    <text x="150" y="482" text-anchor="middle" fill="#9aa0a6" font-size="11">zero draw calls · zero per-frame work</text>
+
+    <path d="M390,300 L390,360" stroke="#4a4e59" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <text x="398" y="335" fill="#9aa0a6" font-size="11">bus handles exposed</text>
+    <path d="M280,435 L390,435" stroke="#4a4e59" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrB)"/>
+  </g>
+</svg>
+
+<div class="legend">
+  <span><i style="background:#3ddc84"></i>canonical event flow</span>
+  <span><i style="background:#8ab4ff"></i>input convergence / observation</span>
+  <span><i style="background:#ffb020"></i>director decision → response</span>
+  <span><i style="background:#4a4e59"></i>mounting / exposure</span>
+</div>
+
+<div class="note">
+  <b>The repeat-recognition proof:</b> every <code>INTERACT</code> consults memory first (the <code>MEMORY_READ</code> event carries
+  <code>priorInteractions</code> in its data). A repeat (<code>priorInteractions ≥ 1</code>) fires <span class="rule">RULE_REPEAT_ACK</span>
+  — a visibly different response (warm pulse + double-blip) from the state rule. Memory is read before it is responded to. That is the proof.
+</div>
+
+<h2>Director rules (deterministic, named)</h2>
+<table>
+  <tr><th>Rule</th><th>State</th><th>Response</th><th>Lighting</th></tr>
+  <tr><td class="rule">RULE_CURIOUS_REVEAL</td><td>CURIOUS</td><td>warmth lift — reveal hidden detail</td><td>dim 1.0 · warmth +0.15</td></tr>
+  <tr><td class="rule">RULE_RETURN_ACK</td><td>RETURNING</td><td>warm pulse — acknowledge the return</td><td>dim 1.0 · warmth +0.30</td></tr>
+  <tr><td class="rule">RULE_UNEXPECTED_RECOMPOSE</td><td>UNEXPECTED</td><td>cooler shift — alter composition</td><td>dim 0.9 · warmth −0.35</td></tr>
+  <tr><td class="rule">RULE_COMMIT_ADVANCE</td><td>COMMITTED</td><td>light lift — advance narrative</td><td>dim 1.05 · warmth +0.10</td></tr>
+  <tr><td class="rule">RULE_EXPLORE_INVITE</td><td>EXPLORING</td><td>brightness lift — invite further</td><td>dim 1.05 · warmth +0.05</td></tr>
+  <tr><td class="rule">RULE_REPEAT_ACK</td><td>REPEAT (memory read)</td><td>warm pulse + double-blip — recognized repeat</td><td>dim 1.0 · warmth +0.45</td></tr>
+</table>
+
+<h2>Event vocabulary (locked, meaningful only)</h2>
+<p><code>DISCOVER</code> <code>INTERACT</code> <code>RETURN</code> <code>DEVIATE</code> <code>COMPLETE</code> — plus the engine's own
+<code>BEHAVIOR_STATE</code>, <code>DIRECTOR_RULE</code>, <code>MEMORY_READ</code>. Every event carries type, seq, timestamp, source, target, position, duration, significance — enough to explain what happened, nothing else.</p>
+
+<div class="note">
+  <b>Judge Mode contract:</b> Judge Mode must render THIS bus (EventBus stream), THIS memory, THIS state, THIS rule — never a parallel demonstration model.
+</div>
+</div>
+</body>
+</html>
