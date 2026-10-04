@@ -22,7 +22,13 @@ const items = []
 
 export function registerInteractive(rec) {
   // rec: { id, kind: 'hotspot'|'vote'|'exit'|'mr', object3D, radius, onActivate }
-  items.push(rec)
+  // Quest parity fix (2026-10-03): components register inside useMemo, which
+  // React may invoke twice (double-mount / memo discard). Without this guard,
+  // every interactive appears twice in the registry — GazeDwell sees
+  // duplicates and activations can double-fire. Replace by semantic ID.
+  const existing = items.findIndex((i) => i.id === rec.id)
+  if (existing >= 0) items[existing] = rec
+  else items.push(rec)
   return () => {
     const i = items.indexOf(rec)
     if (i >= 0) items.splice(i, 1)
