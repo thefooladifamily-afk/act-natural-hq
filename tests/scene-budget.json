@@ -1,0 +1,1 @@
+{"_note":"Scene-level perf budget manifest. Fill `measured` from the ?perf=1 in-scene HUD on Quest 3/3S (72fps floor). The budget check FAILS the build when measured values exceed caps; until measured, scene totals are enforced at runtime by the governor.","caps":{"drawCalls":80,"tris":300000},"measured":null}
