@@ -1,0 +1,44 @@
+{
+  "dependencies": {
+    "@react-three/fiber": "^9.8.1",
+    "@react-three/xr": "^6.6.31",
+    "ratk": "^0.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-basic-ssl": "^2.1.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "playwright": "^1.63.0",
+    "vite": "^8.3.0"
+  },
+  "name": "hq-v5-greybox",
+  "private": true,
+  "scripts": {
+    "build": "node tests/budget-check.mjs && vite build",
+    "dev": "vite",
+    "dev:https": "vite --host --https",
+    "dev:lan": "vite --host",
+    "preview": "vite preview",
+    "build:force": "vite build",
+    "build:quest": "node scripts/quest-build.mjs",
+    "quest:smoke": "node scripts/quest-smoke.mjs",
+    "quest:serve": "node scripts/quest-serve.mjs",
+    "quest:deploy": "bash scripts/quest-deploy.sh",
+    "test": "node --import ./tests/register.mjs tests/loop-test.mjs && node --import ./tests/register.mjs tests/recut-test.mjs && node --import ./tests/register.mjs tests/sprite-lipsync-test.mjs",
+    "test:loop": "node --import ./tests/register.mjs tests/loop-test.mjs",
+    "test:recut": "node --import ./tests/register.mjs tests/recut-test.mjs",
+    "acceptance": "node scripts/acceptance.mjs",
+    "acceptance:report": "node scripts/acceptance-report.mjs",
+    "checkpoint": "node scripts/checkpoint.mjs",
+    "evidence": "node scripts/evidence-capture.mjs",
+    "demo": "node scripts/demo-path.mjs",
+    "judge-mode-test": "node scripts/judge-mode-test.mjs",
+    "proof-video": "node scripts/proof-video.mjs"
+  },
+  "type": "module",
+  "version": "0.0.0"
+}
